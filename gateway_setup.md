@@ -2,11 +2,11 @@
 
 ## Introduction
 
-The gateway is the central hub of communication for a PRISMS sensor system. Sensors transmit their data to a gateway and the gateway takes care of uploading the data to the cloud:
+The gateway is the central hub of communication for a PRISMS sensor system. Sensors transmit their data to a gateway and the gateway takes care of uploading the data to the a remote database:
 
 ![High Level Architecture](images/High-Level-Architecture.pdf)
 
-The gateway consists of multiple components. The major component is [Home Assistant](https://home-assistant.io). Home Assistant is the common foundation that all sensors must support. It provides many built in components with ways to add custom components. These components tell Home Assistant how to interact with various types of sensors. The PRISMS sensor component communicates with PRISMS sensors, integrating them into Home Assistant. The PRISMS InfluxDB component takes any data that is given to Home Assistant and uploads it to a [InfluxDB server](https://github.com/influxdata/influxdb). The PRISMS InfluxDB component also provides data persistence in case the gateway loses power and has not been able to upload all of its data. The source for the PRISMS components can be found [here](https://github.com/VDL-PRISM/home-assistant-components).  The last component, [ngrok](https://ngrok.com) is a service that allows you to connect to your gateway after it has been deployed. This is helpful for remote debugging and monitoring. It is not required.
+The gateway consists of multiple components. The major component is [Home Assistant](https://home-assistant.io). Home Assistant is the common foundation that all sensors must support. It provides many built-in components with ways to add custom components. These components tell Home Assistant how to interact with various types of sensors. The PRISMS sensor component communicates with PRISMS sensors, integrating them into Home Assistant. The PRISMS InfluxDB component takes any data that is given to Home Assistant and uploads it to a [InfluxDB server](https://github.com/influxdata/influxdb). The PRISMS InfluxDB component also provides data persistence in case the gateway loses power and has not been able to upload all of the collected data. The source for the PRISMS components can be found [here](https://github.com/VDL-PRISM/home-assistant-components).  The last component, [ngrok](https://ngrok.com) is a service that allows you to connect to your gateway after it has been deployed. This is helpful for remote debugging and monitoring. It is not required.
 
 ![Gateway Components](images/Gateway.pdf)
 
@@ -38,7 +38,7 @@ Once you have Etcher downloaded and installed, plug in your SD card into your co
 ![SD card plugged into computer](images/sd_card.jpg)
 
 
-Select the image that you previously downloaded. Etcher typically detects if an SD card is plugged in and selects the correct drive for you. Confirm that this is the correct drive. Lastly, click the “Flash!” button. Once the process is complete, keep the SD card plugged into your computer.
+Select the image PRISMS image you downloaded. Etcher typically detects if an SD card is plugged in and selects the correct drive for you. Confirm that this is the correct drive. Lastly, click the “Flash!” button. Once the process is complete, keep the SD card plugged into your computer.
 
 ![Flashing the SD card using Etcher](images/etcher.png)
 
@@ -67,4 +67,9 @@ If you are new to YAML, it might be a good idea to run the file through a YAML L
 Unmount the SD card from your computer and plug it into the Raspberry Pi. If you have a case, put the case on the Raspberry Pi. Plug the gateway into an Ethernet cable that is connected to the Internet, then connect the power cable. The gateway's first boot will take about 5 minutes to complete because it is configuring itself. Once the gateway has rebooted twice, it is ready to go.
 
 ### Finish
-To confirm that everything is working, you can go to `http://gateway.local:8123/` in your web browser. Home Assistant’s interface should come up. Or if you have ngrok setup, you can connect remotely through `https://[subdomain].ngrok.io` replacing `[subdomain]` with the subdomain you configured ngrok with.
+
+Home Assistant provides a web interface that shows the values of all the sensors connected. To access this web interface, got to `http://[gateway-ip-address]:8123`. If you are using a Mac, Linux, or Windows computer with iTunes[^1], you can use the gateway's hostname to connect to it. If you left the host name as `gateway`, then you could go to `http://gateway.local:8123`. You must be on the same network as the gateway for this to work.
+
+If you have ngrok setup, you can connect remotely through `https://[subdomain].ngrok.io` replacing `[subdomain]` with the subdomain you configured ngrok with.
+
+[^1]: Using `.local` requires that you have Bonjour or zeroconf running on your computer. This is turned on by default for Mac and Linux computers. Installing iTunes on a Windows computer also turns on this feature.
