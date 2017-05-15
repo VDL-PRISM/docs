@@ -28,7 +28,7 @@ _Note: We assume that you have access to a server running InfluxDB to upload dat
 To build a gateway, you must first download and flash the custom disk image to the SD card. Then you must customize the disk image for your specific deployment. Lastly, you build the gateway.
 
 ### Download the Image
-Download the PRISMS Gateway image from [here](https://www.files.app.lundrigan.org/2017-05-10-prisms-gateway.img.zip).
+Download the PRISMS Gateway image from [here](https://www.files.app.lundrigan.org/2017-05-15-prisms-gateway.img.zip).
 
 ### Writing Image to the SD Card
 In order to copy the image file to an SD card, you need special software that "flashes" the SD card with the disk image. Many tools exist, but we like an app called [Etcher](https://etcher.io).
