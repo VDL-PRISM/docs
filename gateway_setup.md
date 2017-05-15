@@ -38,7 +38,7 @@ Once you have Etcher downloaded and installed, plug in your SD card into your co
 ![SD card plugged into computer](images/sd_card.jpg)
 
 
-Select the image PRISMS image you downloaded. Etcher typically detects if an SD card is plugged in and selects the correct drive for you. Confirm that this is the correct drive. Lastly, click the “Flash!” button. Once the process is complete, keep the SD card plugged into your computer.
+Select the image PRISMS image you downloaded. Etcher typically detects if an SD card is plugged in and selects the correct drive for you. Confirm that this is the correct drive. Lastly, click the “Flash!” button. Once the process is complete, remount the SD card by unplugging the SD card and plugging it back in.
 
 ![Flashing the SD card using Etcher](images/etcher.png)
 
@@ -53,9 +53,9 @@ This file allows you to customize your gateway for a deployment. The first time 
 
 The configuration file is a [YAML file](http://yaml.org) which has a specific format and syntax. If you are unfamiliar with YAML, you should take a few minutes to familiarize yourself. It is not a complicated format, but it is worth understanding. There are lots of resources online for learning more about it ([here](https://learnxinyminutes.com/docs/yaml/) and [here](https://www.youtube.com/watch?v=W3tQPk8DNbk)).
 
-There are four main parts to this file: `hostname`, `password`, `ngrok`, `home_assistant`. `hostname` changes the name of the computer. For most cases, the default ("gateway") works fine. `password` changes the password of the gateway computer. Make sure to change this. `ngrok` allows you to configure the [ngrok service](https://ngrok.com). To read more about how to configure ngrok, see the [ngrok documentation](https://ngrok.com/docs#config). The last part is `home_assistant`. This is where all configuration for Home Assistant goes.
+There are four main parts to this file: `hostname`, `password`, `ngrok`, `home_assistant`. `hostname` changes the name of the computer. For most cases, the default ("gateway") works fine. `password` changes the password of the gateway computer. **Make sure to change this.** `ngrok` allows you to configure the [ngrok service](https://ngrok.com). To read more about how to configure ngrok, see the [ngrok documentation](https://ngrok.com/docs#config). The last part is `home_assistant`. This is where all configuration for Home Assistant goes.
 
-There are 12 places where the `device-init.yaml` configuration needs to be changed. Everything else can stay the same unless you want to customize your gateway further. If you don't plan on using ngrok, then you can delete the whole `ngrok` section. The `prisms_influxdb` subsection (under `home_assistant`) is where you put information about the InfluxDB server you want the gateway to connect to.
+The default `device-init.yaml` has 12 places that need to be changed, as marked by "[CHANGE ME]". For most cases, everything else can stay the same unless you want to customize your gateway further. If you don't plan on using ngrok, then you can delete the whole `ngrok` section. The `prisms_influxdb` subsection (under `home_assistant`) is where you put information about the InfluxDB server you want the gateway to connect to. We assume that you already have set up an InfluxDB instance with a username and password.
 
 ![Contents of `device_init.yaml`](images/config.png)
 
