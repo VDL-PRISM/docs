@@ -37,7 +37,6 @@ Once you have Etcher downloaded and installed, plug in your SD card into your co
 
 ![SD card plugged into computer](images/sd_card.jpg)
 
-
 Select the image PRISMS image you downloaded. Etcher typically detects if an SD card is plugged in and selects the correct drive for you. Confirm that this is the correct drive. Lastly, click the “Flash!” button. Once the process is complete, remount the SD card by unplugging the SD card and plugging it back in.
 
 ![Flashing the SD card using Etcher](images/etcher.png)
@@ -53,13 +52,19 @@ This file allows you to customize your gateway for a deployment. The first time 
 
 The configuration file is a [YAML file](http://yaml.org) which has a specific format and syntax. If you are unfamiliar with YAML, you should take a few minutes to familiarize yourself. It is not a complicated format, but it is worth understanding. There are lots of resources online for learning more about it ([here](https://learnxinyminutes.com/docs/yaml/) and [here](https://www.youtube.com/watch?v=W3tQPk8DNbk)).
 
-There are four main parts to this file: `hostname`, `password`, `ngrok`, `home_assistant`. `hostname` changes the name of the computer. For most cases, the default ("gateway") works fine. `password` changes the password of the gateway computer. **Make sure to change this.** `ngrok` allows you to configure the [ngrok service](https://ngrok.com). To read more about how to configure ngrok, see the [ngrok documentation](https://ngrok.com/docs#config). The last part is `home_assistant`. This is where all configuration for Home Assistant goes.
-
-The default `device-init.yaml` has 12 places that need to be changed, as marked by "[CHANGE ME]". For most cases, everything else can stay the same unless you want to customize your gateway further. If you don't plan on using ngrok, then you can delete the whole `ngrok` section. The `prisms_influxdb` subsection (under `home_assistant`) is where you put information about the InfluxDB server you want the gateway to connect to. We assume that you already have set up an InfluxDB instance with a username and password.
+There are four main parts to this file: `hostname`, `password`, `ngrok`, `home_assistant`.
 
 ![Contents of `device_init.yaml`](images/config.png)
 
-Once you have updated this file, save your changes. Your gateway is now customized!
+- `hostname` changes the name of the computer. For most cases, the default ("gateway") works fine.
+
+- `password` changes the password of the gateway computer. **Make sure to change this.**
+
+- `ngrok` allows you to configure the [ngrok service](https://ngrok.com), which allows you to connect to your gateway from anywhere. To read more about how to configure ngrok, see the [ngrok documentation](https://ngrok.com/docs#config). If you don't plan on using ngrok, then you can delete the whole `ngrok` section.
+
+- `home_assistant_configuration` is where all configuration for Home Assistant goes. Home Assistant is broken into different components. The default `device-init.yaml` provides a few basic components, one of which uploads data to an InfluxDB server (called `prisms_influxdb`). Enter the InfluxDB server information into this part of the configuration. We assume that you already have set up an InfluxDB instance with a username and password. To make the gateway useful, you must add sensor configuration. A list of all components and how to set them up is described in the [Home Assistant documentation](https://home-assistant.io/components). We have given a few examples of common sensors [here](sensor_examples.md). Add any sensor configuration to the end of this section.
+
+The default `device-init.yaml` has 12 places that need to be changed, as marked by "[CHANGE ME]". Once you have updated these 12 locations and added some sensors to the Home Assistant configuration, save your changes. Your gateway is now customized!
 
 If you are new to YAML, it might be a good idea to run the file through a YAML Linter to make sure you didn't make any mistakes in the format. Copy the contents of the file and paste it into [this website](http://www.yamllint.com). It will tell you if your YAML format is correct or not.
 
@@ -67,9 +72,9 @@ If you are new to YAML, it might be a good idea to run the file through a YAML L
 Unmount the SD card from your computer and plug it into the Raspberry Pi. If you have a case, put the case on the Raspberry Pi. Plug the gateway into an Ethernet cable that is connected to the Internet, then connect the power cable. The gateway's first boot will take about 5 minutes to complete because it is configuring itself. Once the gateway has rebooted twice, it is ready to go.
 
 ### Finish
-
-Home Assistant provides a web interface that shows the values of all the sensors connected. To access this web interface, got to `http://[gateway-ip-address]:8123`. If you are using a Mac, Linux, or Windows computer with iTunes[^1], you can use the gateway's hostname to connect to it. If you left the host name as `gateway`, then you could go to `http://gateway.local:8123`. You must be on the same network as the gateway for this to work.
+Home Assistant provides a web interface that shows the values of all the sensors connected. To access this web interface, got to `http://[gateway-ip-address]:8123`. If you are using a Mac, Linux, or Windows computer with iTunes[^1], you can use the gateway's hostname to connect to it. If you left the hostname as `gateway`, then you could go to `http://gateway.local:8123`. You must be on the same network as the gateway for this to work.
 
 If you have ngrok setup, you can connect remotely through `https://[subdomain].ngrok.io` replacing `[subdomain]` with the subdomain you configured ngrok with.
+
 
 [^1]: Using `.local` requires that you have Bonjour or zeroconf running on your computer. This is turned on by default for Mac and Linux computers. Installing iTunes on a Windows computer also turns on this feature.
