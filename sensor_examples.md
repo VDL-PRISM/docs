@@ -55,7 +55,7 @@ home_assistant_configuration:
 
 ```
 
-Notice at the end of the file is where the sensor configuration goes. Below are a few examples of how to set up a sensor.
+Notice at the end of this example is where the sensor configuration goes. Below are a few examples of how to set up a sensor.
 
 
 ## WeMo Devices

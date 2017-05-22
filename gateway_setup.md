@@ -70,9 +70,6 @@ If you are new to YAML, it might be a good idea to run the file through a YAML L
 Unmount the SD card from your computer and plug it into the Raspberry Pi. If you have a case, put the case on the Raspberry Pi. Plug the gateway into an Ethernet cable that is connected to the Internet, then connect the power cable. The first time the gateway boots, it must be connected to the Internet. The gateway's first boot will take about 15 minutes to complete.
 
 ### Finish
-Home Assistant provides a web interface that shows the values of all the sensors connected. To access this web interface, go to `http://[gateway-ip-address]:8123`. If you are using a Mac, Linux, or Windows computer with iTunes[^1], you can use the gateway's hostname to connect to it. If you left the hostname as `gateway`, then you could go to [`http://gateway.local:8123`](http://gateway.local:8321). You must be on the same network as the gateway for this to work.
+Home Assistant provides a web interface that shows the values of all the sensors connected. To access this web interface, go to `http://[gateway-ip-address]:8123`. To find your gatway's IP address, you can use the following [these instructions](https://www.raspberrypi.org/documentation/remote-access/ip-address.md). Also, if you are using a Mac or Linux computer, you can use the gateway's hostname to connect to it. For example, if you left the hostname as `gateway`, then you could go to [`http://gateway.local:8123`](http://gateway.local:8123).
 
 If you have ngrok setup, you can connect remotely through `https://[subdomain].ngrok.io` replacing `[subdomain]` with the subdomain you configured ngrok with.
-
-
-[^1]: Using `.local` requires that you have Bonjour or zeroconf running on your computer. This is turned on by default for Mac and Linux computers. Installing iTunes on a Windows computer also turns on this feature.
