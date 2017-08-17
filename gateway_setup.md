@@ -14,6 +14,7 @@ We have built a custom disk image to simplify the building and setting up a gate
 
 _Note: We assume that you have access to a server running InfluxDB to upload data._
 
+
 ## Gateway Parts
 - [Raspberry Pi 3](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
 - Micro USB power supply ([example](https://www.adafruit.com/product/1995))
@@ -28,7 +29,7 @@ _Note: We assume that you have access to a server running InfluxDB to upload dat
 To build a gateway, you must first download and flash the custom disk image to the SD card. Then you must customize the disk image for your specific deployment. Lastly, you build the gateway.
 
 ### Download the Image
-Download the PRISMS Gateway image from [here](https://github.com/VDL-PRISM/gateway-image-builder/releases/download/v2.1.0/v2.1.0-prisms-gateway.img.zip).
+Download the PRISMS Gateway image from [here](https://github.com/VDL-PRISM/gateway-image-builder/releases/download/v2.2.0/v2.2.0-prisms-gateway.img.zip).
 
 ### Writing Image to the SD Card
 In order to copy the image file to an SD card, you need special software that "flashes" the SD card with the disk image. Many tools exist, but we like an app called [Etcher](https://etcher.io).
@@ -69,7 +70,20 @@ If you are new to YAML, it might be a good idea to run the file through a YAML L
 ### Build Gateway
 Unmount the SD card from your computer and plug it into the Raspberry Pi. If you have a case, put the case on the Raspberry Pi. Plug the gateway into an Ethernet cable that is connected to the Internet, then connect the power cable. The first time the gateway boots, it must be connected to the Internet. The gateway's first boot will take about 15 minutes to complete.
 
-### Finish
-Home Assistant provides a web interface that shows the values of all the sensors connected. To access this web interface, go to `http://[gateway-ip-address]:8123`. To find your gatway's IP address, you can use [these instructions](https://www.raspberrypi.org/documentation/remote-access/ip-address.md). Also, if you are using a Mac or Linux computer, you can use the gateway's hostname to connect to it. For example, if you left the hostname as `gateway`, then you could go to [`http://gateway.local:8123`](http://gateway.local:8123).
+
+### Boot
+The first boot of the gateway **requires an Internet connection** and can take up to 20 minutes to configure itself. To check the status, you can ssh into the gateway and look at `/home/pi/prisms_boot.log`. The username is `pi` and the password is whatever you set it to in your `device-init.yaml` file. This will show you the status of the configuration process. Starting the docker container for the first time takes the longest. You know it is done when "Done..." is printed at the end of the file.
+
+Home Assistant provides a web interface that shows the values of all the sensors connected. To access this web interface, go to `http://[gateway-ip-address]:8123`. To find your gateway's IP address, you can use [these instructions](https://www.raspberrypi.org/documentation/remote-access/ip-address.md). Also, if you are using a Mac or Linux computer, you can use the gateway's hostname to connect to it. For example, if you left the hostname as `gateway`, then you could go to [`http://gateway.local:8123`](http://gateway.local:8123).
 
 If you have ngrok setup, you can connect remotely through `https://[subdomain].ngrok.io` replacing `[subdomain]` with the subdomain you configured ngrok with.
+
+
+### Customize
+We use docker to run Home Assistant, InfluxDB, and Mosquitto (MQTT broker). The container name on the gateway is `prisms_gateway`. You can enter the container by running
+
+```bash
+docker exec -it prisms_gateway bash
+```
+
+All persistent storage is stored in the `/home/pi/data` directory of the gateway. To add your own custom components to Home Assistant, you can put your files in the `/home/pi/data/homeassistant/custom_components`. Inside of the `/home/pi/data/homeassistant` folder contains other important information like the Home Assistant's configuration file (`configuration.yaml`) and log file (`home-assistant.log`).
